@@ -28,6 +28,7 @@ public class PlayerController : MonoBehaviour
 
     public Button increaseFiringSpeed;
     public Button increasePlayerSpeed;
+    public Button restartButton;
 
     void Start()
     {
@@ -38,6 +39,9 @@ public class PlayerController : MonoBehaviour
 
         Button iPS = increasePlayerSpeed.GetComponent<Button>();
         iPS.onClick.AddListener(IncreasePlayerSpeed);
+
+        Button rB = restartButton.GetComponent<Button>();
+        rB.onClick.AddListener(ResetStats);
     }
 
     void Update()
@@ -46,7 +50,11 @@ public class PlayerController : MonoBehaviour
 
         if (playerHealth == 0)
         {
-            Destroy(player);
+           player.SetActive(false);
+        }
+        else
+        {
+            player.SetActive(true);
         }
 
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
@@ -108,5 +116,13 @@ public class PlayerController : MonoBehaviour
     void IncreasePlayerSpeed()
     {
         speed += 1;
+    }
+
+    void ResetStats()
+    {
+        timeBetweenFiring = 1;
+        timeBetweenFiring /= 2;
+        speed = 7;
+        playerHealth = 3;
     }
 }
